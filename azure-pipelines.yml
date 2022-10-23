@@ -1,12 +1,4 @@
 # Python package
-- task: PowerShell@2
-  inputs:
-    targetType: 'inline'
-    script: |
-      # Write your PowerShell commands here.
-      
-      Write-Host "Hello World"
-      Invoke-RestMethod -uri 'https://www.netsparkercloud.com/api/1.0/scans/CreateFromPluginScanRequest' -ContentType 'application/json; charset=UTF-8' -Method POST -Headers @{ Authorization = "Basic $([System.Convert]::ToBase64String([System.Text.Encoding]::ASCII.GetBytes($env:USERID +':'+$env:APITOKEN)))"} -Body $(@{ WebsiteId='6067fb6a-8118-4664-a126-ac940226d41c'; ProfileId='7b91115f-bb0d-4d0f-ce39-af3703f5a1c1'; ScanType='Incremental'; VcsCommitInfoModel = @{CiBuildConfigurationName = $env:SYSTEM_TEAMPROJECT; CiBuildHasChange = $env:BUILD_SOURCEVERSION; CiBuildId = $env:BUILD_BUILDID; CiBuildUrl= $env:SYSTEM_TEAMFOUNDATIONCOLLECTIONURI; Committer= $env:BUILD_REQUESTEDFOR; IntegrationSystem = 'AzureDevOps'; VcsName = $env:BUILD_REPOSITORY_PROVIDER; VcsVersion = $env:BUILD_SOURCEVERSION};}| ConvertTo-Json)
 # Create and test a Python package on multiple Python versions.
 # Add steps that analyze code, save the dist with the build record, publish to a PyPI-compatible index, and more:
 # https://docs.microsoft.com/azure/devops/pipelines/languages/python
@@ -32,6 +24,15 @@ steps:
   inputs:
     versionSpec: '$(python.version)'
   displayName: 'Use Python $(python.version)'
+
+- task: PowerShell@2
+  inputs:
+    targetType: 'inline'
+    script: |
+      # Write your PowerShell commands here.
+      
+      Write-Host "Hello World"
+      Invoke-RestMethod -uri 'https://www.netsparkercloud.com/api/1.0/scans/CreateFromPluginScanRequest' -ContentType 'application/json; charset=UTF-8' -Method POST -Headers @{ Authorization = "Basic $([System.Convert]::ToBase64String([System.Text.Encoding]::ASCII.GetBytes($env:USERID +':'+$env:APITOKEN)))"} -Body $(@{ WebsiteId='6067fb6a-8118-4664-a126-ac940226d41c'; ProfileId='7b91115f-bb0d-4d0f-ce39-af3703f5a1c1'; ScanType='Incremental'; VcsCommitInfoModel = @{CiBuildConfigurationName = $env:SYSTEM_TEAMPROJECT; CiBuildHasChange = $env:BUILD_SOURCEVERSION; CiBuildId = $env:BUILD_BUILDID; CiBuildUrl= $env:SYSTEM_TEAMFOUNDATIONCOLLECTIONURI; Committer= $env:BUILD_REQUESTEDFOR; IntegrationSystem = 'AzureDevOps'; VcsName = $env:BUILD_REPOSITORY_PROVIDER; VcsVersion = $env:BUILD_SOURCEVERSION};}| ConvertTo-Json)
 
 - script: |
     python -m pip install --upgrade pip
