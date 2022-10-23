@@ -7,7 +7,7 @@ trigger:
 - master
 
 pool:
-  main: default
+  name: Default
 strategy:
   matrix:
     Python27:
